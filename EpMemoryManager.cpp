@@ -761,26 +761,6 @@ uintptr_t EpAllocatorScope::GetScopeBytesAllocated() const {
 // ----------------------------------------------------------------------------
 // new, delete and C API
 
-#ifdef EP_BUILD_SOME_EMBEDDED_COMPILER
-void * operator new(size_t size){
-  EpExit("operator new not supported");
-  return (void*)0xffffffff;
-}
-
-void * operator new[](size_t size) {
-  EpExit("operator new[] not supported");
-  return (void*)0xffffffff;
-}
-
-void operator delete(void * ptr) EP_NOEXCEPT {
-  EpExit("operator delete not supported");
-}
-
-void operator delete[](void * ptr) EP_NOEXCEPT {
-  EpLog("operator delete[] not supported");
-}
-#endif
-
 void* EpMalloc(size_t size) {
   return s_epMemoryManager.Allocate(size);
 }
@@ -832,20 +812,10 @@ uintptr_t EpAllocatorScope::GetScopeAllocationCount() const { return 0; }
 uintptr_t EpAllocatorScope::GetScopeBytesAllocated() const { return 0; }
 
 // ----------------------------------------------------------------------------
-// new, delete and C API
-#ifdef EP_BUILD_SOME_EMBEDDED_COMPILER
-void * operator new(size_t size){ return (void*)0xffffffff; }
-void * operator new[](size_t size) { return (void*)0xffffffff; }
-void operator delete(void * ptr) EP_NOEXCEPT {}
-void operator delete[](void * ptr) EP_NOEXCEPT {}
-#endif
 
 void* EpMalloc(size_t size) { return EpMallocChecked(size); }
 
-void* EpMallocId(size_t size, int memoryAllocatorId) {
-  (void)memoryAllocatorId;
-  return EpMallocChecked(size);
-}
+// TODO: EpMallocExtended unsupported.
 
 void EpFree(void *ptr) { ::free(ptr); }
 

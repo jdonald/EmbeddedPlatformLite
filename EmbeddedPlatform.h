@@ -123,18 +123,17 @@ void EpLogHandler(EpLogLevel level, const char* format, ...);
 void EpLogHandlerV(EpLogLevel level, const char* format, va_list args);
 void EpLogStatus();
 void* EpMalloc(size_t size);
-template <class T> T* EpMalloc(size_t count=1) { return reinterpret_cast<T*>(EpMalloc(count * sizeof(T))); }
-void* EpMallocExtended(size_t size, uintptr_t alignmentMask=EP_ALIGNMENT_MASK, int memoryAllocatorId=-1); // -1 is EpMemoryAllocatorId_UNSPECIFIED
+void* EpMallocExtended(size_t size, uintptr_t alignmentMask, int memoryAllocatorId=-1); // -1 is EpMemoryAllocatorId_UNSPECIFIED
 void EpFree(void *ptr);
-
-template <class T> T* EpNew(int memoryAllocatorId) { void* buf = EpMallocExtended(sizeof(T), EP_ALIGNMENT_MASK, memoryAllocatorId); return new(buf)T; }
-template <class T> T* EpNew(uintptr_t alignmentMask, int memoryAllocatorId) { void* buf = EpMallocExtended(sizeof(T), alignmentMask, memoryAllocatorId); return new(buf)T; }
-template <class T> void EpDelete(T* t) { if (t) { t->~T(); EpFree(t); } }
 void EpHexDump(const void *p, unsigned bytes, const char* label);
 void EpFloatDump(const float *ptr, unsigned count, const char* label);
 bool EpIsFinite(float f);
 bool EpIsScratchpad(void * ptr);
 const char* EpBasename(const char* path);
+
+template <class T> T* EpNew(int memoryAllocatorId) { void* buf = EpMallocExtended(sizeof(T), EP_ALIGNMENT_MASK, memoryAllocatorId); return new(buf)T; }
+template <class T> void EpDelete(T* t) { if (t) { t->~T(); EpFree(t); } }
+
 
 #endif // defined(__cplusplus)
 
