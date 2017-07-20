@@ -96,14 +96,3 @@ unsigned EpProfilerQuery(EpProfilerRecordExternal* buf, unsigned maxSize); // cl
 #define EpProfilerLog(...) ((void)0)
 #define EpProfileScope(...) ((void)0)
 #endif
-// ----------------------------------------------------------------------------------
-
-struct EpProfilerClientCommand {
-  EpProfilerRecordExternal* m_records;
-  unsigned m_maxRecords;
-  unsigned* m_size;
-};
-
-struct EpProfilerSync {
-  unsigned* m_DSPtime;
-};
