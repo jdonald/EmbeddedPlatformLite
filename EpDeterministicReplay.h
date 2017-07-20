@@ -94,7 +94,7 @@ public:
     }
     else {
       size_t result = ::fread(data, size, 1, m_log);
-      EpAssert(result > (size_t)0); (void)result; // Should be == size, but CEVA got that wrong.
+      EpAssert(result > (size_t)0); (void)result; // Should be == size, compiler workaround.
     }
   }
 
@@ -113,7 +113,7 @@ public:
         int32_t chunk = (size < EpDetermine::BUF_SIZE) ? size : EpDetermine::BUF_SIZE;
 
         size_t result = ::fread(buf, chunk, 1, m_log);
-        EpAssert(result > (size_t)0); (void)result; // Should be == chunk, but CEVA got that wrong.
+        EpAssert(result > (size_t)0); (void)result; // Should be == chunk, works around OS bug.
 
         int cmp = ::memcmp(buf, data, chunk);
         EpAssert(cmp == 0); (void)cmp;

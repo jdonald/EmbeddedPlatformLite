@@ -117,3 +117,8 @@
 
 ======================================================
 
+This file contains a list of people who have made large contributions
+to the public version.
+
+Original design and implementation:
+  Adrian Johnston <adrian3@gmail.com>  First published July 19, 2017.

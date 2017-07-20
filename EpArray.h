@@ -7,8 +7,7 @@
 // ----------------------------------------------------------------------------
 // EpArray
 //
-// A lite implementation of std::vector that does not blow out the CEVA compiler.
-// Currently requires a default constructor.
+// Requires a default constructor.
 // Inherits Reserve(size), GetCapacity() and "T GetStorage()[Capacity]".
 
 template<class T, unsigned MaxDim=EpAllocatorMode_Dynamic>

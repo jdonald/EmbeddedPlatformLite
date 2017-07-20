@@ -13,7 +13,7 @@
 #define EP_MEMORY_BUDGET_RESOURCE         (5  *EP_KB)
 #define EP_MEMORY_BUDGET_TEMPORARY_STACK  (60 *EP_KB)
 
-// There is 8.5k unused IDM/D-TCM remaining.
+// TODO: Elaborate for your use case
 #define EP_MEMORY_BUDGET_SCRATCH_PAGE              (10*EP_KB)
 #define EP_MEMORY_BUDGET_SCRATCH_TEMP              (60*EP_KB)
 
@@ -21,8 +21,9 @@
                                 +  EP_MEMORY_BUDGET_SCRATCH_TEMP)
 
 
-// Always always check malloc and halt on failure.  This is important with CEVA because NULL
-// is a valid address and can be written to with disastrous results.
+// Always always check malloc and halt on failure.  This is extremely important
+// with hardware where null is a valid address and can be written to with
+// disastrous results.
 static void* EpMallocChecked(size_t size) {
 #if (EP_MEM_DIAGNOSTIC_LEVEL>=3)
   static size_t count = 0;
@@ -52,7 +53,6 @@ static void* EpMallocChecked(size_t size) {
 // ----------------------------------------------------------------------------
 // EpScratchpad
 //
-// Todo: move OdometryCevaXm4.cpp over to the allocator interface....   Steve.
 
 template<unsigned Bytes>
 struct EpScratchpad {
@@ -139,7 +139,7 @@ protected:
     hdr->actual = actual;
 
 #if (EP_MEM_DIAGNOSTIC_LEVEL>=3)
-    // Record the size of the allocation in debug.  Cast via (uintptr_t) because Mac and CEVA not supporting %p.
+    // Record the size of the allocation in debug.  Cast via (uintptr_t) because Mac not supporting %p.
     EpLog("%s: %x  %d  (count %d, size %d)\n", m_label, (unsigned)(uintptr_t)(hdr + 1), (int)size, (int)m_allocationCount, (int)m_bytesAllocated);
 #endif
     return (void *)aligned;
@@ -153,7 +153,7 @@ protected:
     m_bytesAllocated -= hdr->size;
 
 #if (EP_MEM_DIAGNOSTIC_LEVEL>=3)
-    // Record the size of the allocation in debug.  Cast via (uintptr_t) because Mac and CEVA not supporting %p.
+    // Record the size of the allocation in debug.  Cast via (uintptr_t) because Mac and supporting %p.
     EpLog("%s: %x -%d   (count %d, size %d)\n", m_label, (unsigned)(uintptr_t)p, (int)hdr->size, (int)m_allocationCount, (int)m_bytesAllocated);
 #endif
     ::free((void*)hdr->actual);

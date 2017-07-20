@@ -25,7 +25,7 @@
 #ifdef A_CPP_98_COMPILER
 #define EP_BUILD_SOME_EMBEDDED_COMPILER
 
-#define static_assert(x,...) typedef int EP_CONCATENATE(AvuStaticAssertFail_,__LINE__) [(x) ? 1 : -1]
+#define static_assert(x,...) typedef int EP_CONCATENATE(EpStaticAssertFail_,__LINE__) [(x) ? 1 : -1]
 
 #define constexpr
 #define override
